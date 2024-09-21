@@ -108,7 +108,9 @@ number_plus_5 = [number+5 for number in numbers]
 # BONUS Make a variable named "primes" that is a list containing the prime numbers in the numbers list. *Hint* you may want to make or find a helper function that determines if a given number is prime or not.
 
 def find_prime(number,itr): 
-  if itr == 1 or itr == 2:   
+  if number == 2:
+      return True
+  if itr == 1 or itr == 3:   
     return True
   if number % itr == 0:  
     return False
