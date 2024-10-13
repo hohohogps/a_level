@@ -22,12 +22,12 @@ class Shape:
 class Rectangle(Shape):
 
     def __init__(self,right_angle = True, width = 0, height = 0):
-        super().__init__(colour,area,shape)
+        super().__init__()
         self.right_angle = True
         self.width = width
         self.height = height
         self.diagonal = math.sqrt(self.width^2+self.height^2)
-        self.square = lambda width, height: width == height
+        self.square = width == height
         self.area = width*height
 r = Rectangle(width = 10, height = 10)
 print(r.square)
