@@ -15,23 +15,33 @@ class Stack:
         self.size = size
 
     def __pop__(self):
-        v = self.hnode.data 
-        self.hnode = self.hnode.nnode
-        self.size -= 1
-        return v
-    
+        if self.hnode != None:
+            v = self.hnode.data 
+            self.hnode = self.hnode.nnode
+            self.size -= 1
+            return v
+        else:
+            return None
+        
     def __push__(self,d):
        node = Node(data=d)
        node.nnode = self.hnode
        self.hnode = node
        self.size += 1
 
-    def __size__(self): 
+    def __len__(self): 
         return self.size
     
+    def __str__(self):
+        s = ''
+        n = self.hnode
+        while n != None:
+            s += str(n.data)
+            n = n.nnode
+        return s[::-1]
 
 stack = Stack()
-stack.__push__(234)
-stack.__push__(345)
-print(stack.hnode.data)
-print(stack.hnode.nnode.data)
+stack.__push__('a')
+stack.__push__('b')
+stack.__push__('c')
+print(stack.__str__())
