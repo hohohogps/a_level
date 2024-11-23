@@ -30,13 +30,39 @@ class Book(Stock_Item):
     def display(self):
         print(f'{self.title}\n{self.author}\n{self.ISBN}\n{self.loan}\n{self.date}')
 
+    def check_ISBN(self):
+        ISBN = [None] + list(str(self.ISBN))
+    
+        CalculatedDigit = 0
+        Count = 1 
+
+        while Count < 13:
+            CalculatedDigit += ISBN[Count]
+            Count += 1 
+            CalculatedDigit += ISBN[Count]*3
+            Count += 1
+
+        while CalculatedDigit >= 10:
+            CalculatedDigit -= 10
+
+        CalculatedDigit = 10 - CalculatedDigit
+
+        if CalculatedDigit == 10:
+            CalculatedDigit = 0
+
+        if CalculatedDigit == ISBN[13]:
+            print('Valid ISBN')
+        else:
+            print('Invalid ISBN')
+
 class CD(Stock_Item):
 
-    def __init__(self,title=None,loan=False,date=date.today(),artist=None,type=None):
+    def __init__(self,title=None,loan=False,date=None,artist=None,type=None):
         super().__init__(title,loan,date)
         self.artist = artist
         self.type = type
 
+    
 
-hp = Book('Harry Potter',False,date.today(),'Rowling',None)
-hp.display()
+hp = Book('Harry Potter',False,date.today(),'Rowling',9781510405196)
+hp.check_ISBN()
