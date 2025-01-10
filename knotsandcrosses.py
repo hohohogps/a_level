@@ -1,4 +1,5 @@
 from time import sleep as s
+import random as r
 
 class Error(Exception):
     pass
@@ -60,14 +61,48 @@ class Board:
                 if j == None:
                     return False
         return True
-
+    
+    def available(self):
+        #O(n^2)
+        result = []
+        for i in self.list:
+            for j in self.list:
+                if j != None:
+                    result.append([i,j])
+        return result
 
 class Computer:
-    def __init__(self,difficulty):
-        pass
+    def __init__(self,board):
+        self.board = board
 
     def move(self):
-        pass
+        available = self.board.available()
+        curr = self.board.curr
+        y = self.board
+
+        for i in available:
+            y.set(i,y.curr)
+            if y.win():
+                return i
+            y = self.board()
+        
+        return r.choice(available)
+        
+        
+def procedure(I,board):
+    board.set(I,board.curr)
+           
+    if board.win():
+        print(f'{board.curr} won.')
+        return True
+    
+    elif board.full():
+        print('Draw.')
+        return True
+        
+    else:
+        return False
+    board.curr = board.symbols[board.symbols.index(board.curr)-1]
 
 
 def game():
@@ -78,26 +113,27 @@ def game():
     s(0.5)
     s2 = input('Second player symbol')
     x = Board(d,True,[s1,s2])
+    human = input('True or False?').lower()
+    if human != 'true':
+        c = Computer(x)
 
     while True:
+
         x.display()
         s(0.5)
         i = int(input('Row. Zero indexed.'))
         s(0.5)
         j = int(input('Column. Zero indexed.'))
         s(0.5)
-
-        x.set([i,j],x.curr)
         
+        I = [i,j]
         
-        if x.win():
-            print(f'{x.curr} won.')
+        procedure(I,x)
+        if procedure:
             break
-        
-        elif x.full():
-            print('Draw.')
-            break
-    
-        x.curr = x.symbols[x.symbols.index(x.curr)-1]
 
+        if human != 'true':
+            procedure(c.move,x)
+            if procedure:
+                break
 game()
