@@ -16,23 +16,22 @@ class TextEditor(QMainWindow):
         self.text_edit = QTextEdit()
         main_layout.addWidget(self.text_edit)
 
-        open_button = QPushButton("Open")
-        open_button.clicked.connect(self.open_file)
-        button_layout.addWidget(open_button)
-
-        save_button = QPushButton("Save")
-        save_button.clicked.connect(self.save_file)
-        button_layout.addWidget(save_button)
-
-        quit_button = QPushButton("Quit")
-        quit_button.clicked.connect(self.close)
-        button_layout.addWidget(quit_button)
-
         main_layout.addLayout(button_layout)
         central_widget.setLayout(main_layout)
 
         self.text_changed = False
         self.text_edit.textChanged.connect(self.on_text_changed)
+
+        menubar = self.menuBar()
+        file_menu = menubar.addMenu("File")
+        file_menu.addAction("Open", self.open_file)
+        file_menu.addSeparator()
+        file_menu.addAction("Save", self.save_file)
+        file_menu.addSeparator()
+        file_menu.addAction("Quit", self.close)
+
+
+
 
     def on_text_changed(self):
         self.text_changed = True
@@ -74,4 +73,4 @@ class TextEditor(QMainWindow):
 app = QApplication(sys.argv)
 editor = TextEditor()
 editor.show()
-sys.exit(app.exec())
+app.exec()
