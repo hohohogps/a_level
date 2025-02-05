@@ -1,0 +1,11 @@
+sic, the aggregate can play a vital role not only
+at the immediate surface level, but at intermediate and background levels too:
+the surface level is that of the array (an aggregate formed by concurrent, partial
+unfoldings of twelve-note sets); the intermediate level is that of the lyne (a com-
+positionally uninterpreted complete linear unfolding of a twelve-note set); the
+background level is formed by the set-class underlying a particular passage
+(where a set-class is the group of all sets which can be transformed into one
+another by means of the >>familiar<< operations alluded to above). It is clear that
+this fundamental emphasis derives from Schoenberg's dictum: >>... no tone is re-
+peated within the series and ... it uses all twelve notes of the chromatic scale.<<
+(SCHOENBERG 1941:218). Although some of Schoenb

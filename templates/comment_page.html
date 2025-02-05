@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Post a Comment</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        form { margin-bottom: 20px; }
+        input, textarea { display: block; margin-bottom: 10px; width: 100%; padding: 8px; }
+        .post { border: 1px solid #ddd; padding: 10px; margin-bottom: 10px; }
+        .post-title { font-weight: bold; font-size: 1.2em; }
+        .post-meta { font-size: 0.9em; color: gray; }
+    </style>
+</head>
+<body>
+    <h2>Submit a Post</h2>
+    <form action="/comment" method="post">
+        <input type="text" name="name" placeholder="Yur alias" required>
+        <input type="text" name="title" placeholder="Ptitle of post" required>
+        <textarea name="content" placeholder="Writ here" required></textarea>
+        <input type="submit" value="Submit">
+    </form>
+
+    <h2>Posts</h2>
+    {% for post in comment_list %}
+        <div class="post">
+            <div class="post-meta">{{ post[0] }} | <strong>{{ post[1] }}</strong></div>
+	    <br>
+            <div class="post-title">{{ post[2] }}</div>
+            <div>{{ post[3] }}</div>
+        </div>
+    {% endfor %}
+</body>
+</html>
