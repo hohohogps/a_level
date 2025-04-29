@@ -54,6 +54,8 @@ def CreateTileDictionary():
       TileDictionary[chr(65 + Count)] = 2
     elif Count in [5, 7, 10, 21, 22, 24]:
       TileDictionary[chr(65 + Count)] = 3
+    elif Count in [9,23]:
+      TileDictionary[chr(65 + Count)] = 4
     else:
       TileDictionary[chr(65 + Count)] = 5
   return TileDictionary
@@ -65,6 +67,7 @@ def DisplayTileValues(TileDictionary, AllowedWords):
   for Letter, Points in TileDictionary.items():
     print("Points for " + Letter + ": " + str(Points))
   print()
+  CalculateFrequencies(AllowedWords)
 
 def GetStartingHand(TileQueue, StartHandSize):
   Hand = ""
@@ -95,14 +98,30 @@ def CheckWordIsInTiles(Word, PlayerTiles):
   return InTiles 
 
 def CheckWordIsValid(Word, AllowedWords):
-  ValidWord = False
-  Count = 0
-  while Count < len(AllowedWords) and not ValidWord:
-    if AllowedWords[Count] == Word:
-      ValidWord = True
-    Count += 1
-  return ValidWord
+    f_pointer = 0
+    r_pointer = len(AllowedWords)-1
 
+    while f_pointer <= r_pointer:
+      m_pointer = (f_pointer + r_pointer)//2
+      print(AllowedWords[m_pointer])
+
+      if AllowedWords[m_pointer] == Word:
+        return True
+      
+      elif AllowedWords[m_pointer] > Word:
+        r_pointer = m_pointer - 1 
+
+      else:
+        f_pointer = m_pointer + 1
+
+    return False
+
+def CalculateFrequencies(AllowedWords):
+    big_string = ''.join(AllowedWords)
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    for c in alphabet:
+      print(f'letter {c} occurs {big_string.count(c)} many times')
+      
 def AddEndOfTurnTiles(TileQueue, PlayerTiles, NewTileChoice, Choice):
   if NewTileChoice == "1":
     NoOfEndOfTurnTiles = len(Choice)
@@ -131,20 +150,11 @@ def GetScoreForWord(Word, TileDictionary):
     Score += 5
   return Score
   
-def GetScoreForWordAndPrefix(Word, TileDictionary, AllowedWords):
-  Score = 0
-  if len(Word) < 2:
-    return Score
-  if CheckWordIsValid(Word, AllowedWords):
-    Score += GetScoreForWord(Word, TileDictionary)
-  Score += GetScoreForWordAndPrefix(Word[:len(Word)-1], TileDictionary, AllowedWords)
-  return Score
-
 def UpdateAfterAllowedWord(Word, PlayerTiles, PlayerScore, PlayerTilesPlayed, TileDictionary, AllowedWords):
   PlayerTilesPlayed += len(Word)
   for Letter in Word:
     PlayerTiles = PlayerTiles.replace(Letter, "", 1)
-  PlayerScore += GetScoreForWordAndPrefix(Word, TileDictionary, AllowedWords)
+  PlayerScore += GetScoreForWord(Word, TileDictionary)
   return PlayerTiles, PlayerScore, PlayerTilesPlayed
       
 def UpdateScoreWithPenalty(PlayerScore, PlayerTiles, TileDictionary):
@@ -281,8 +291,17 @@ def Main():
   MaxHandSize = 20
   MaxTilesPlayed = 50
   NoOfEndOfTurnTiles = 3
-  StartHandSize = 15
   Choice = ""
+  StartHandSize = 0
+  while True:
+    try:
+      StartHandSize = int(input('Start hand size:'))
+    except ValueError:
+      print('Must enter a number.')
+    if StartHandSize in list(range(1,21)):
+      break
+    else:
+      print('Start hand size must be within 1, 20 inclusive.')
   while Choice != "9":
     DisplayMenu()
     Choice = input("Enter your choice: ")
