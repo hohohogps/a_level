@@ -13,4 +13,4 @@ for y in range(375):
         if not all(abs(val - ref) <= 68 for val, ref in zip(person_pix[x, y], (118, 218, 148))):
             background_pix[x, y] = person_pix[x, y]
 
-background.show()
+background.save(r"C:\Users\Ryan\Desktop\tungtungtung.png")
